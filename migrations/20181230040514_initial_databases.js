@@ -10,8 +10,7 @@ exports.up = function(knex, Promise) {
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
   		table.string('rating').unique();
-  		table.uuid('route_type_id');
-  		table.foreign('route_type_id').references('id').inTable('route_type');
+  		table.uuid('route_type_id').references('id').inTable('route_type');
   	})
   }).then(() => {
   	return knex.schema.createTable('finish', function(table) {
@@ -36,12 +35,9 @@ exports.up = function(knex, Promise) {
   		table.uuid('id')
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
-  		table.uuid('finish_id');
-  		table.foreign('finish_id').references('id').inTable('finish');
-  		table.uuid('grade_id');
-  		table.foreign('grade_id').references('id').inTable('grade');
-  		table.uuid('route_type_id');
-  		table.foreign('route_type_id').references('id').inTable('route_type');
+  		table.uuid('finish_id').references('id').inTable('finish');
+  		table.uuid('grade_id').references('id').inTable('grade');
+  		table.uuid('route_type_id').references('id').inTable('route_type');
   	})
   }).then(() => {
   	return knex.schema.createTable('users', function(table) {
@@ -61,28 +57,24 @@ exports.up = function(knex, Promise) {
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
   		table.datetime('date', 6).defaultTo(knex.fn.now(6));
-  		table.uuid('user_id');
-  		table.foreign('user_id').references('id').inTable('users');
-  		table.uuid('gym_id');
-  		table.foreign('gym_id').references('id').inTable('gyms');
+  		table.uuid('user_id').references('id').inTable('users');
+  		table.uuid('gym_id').references('id').inTable('gyms');
   	})
   }).then(() => {
   	return knex.schema.createTable('session_routes', function(table) {
   		table.uuid('id')
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
-  		table.uuid('route_id');
-  		table.foreign('route_id').references('id').inTable('routes');
-  		table.uuid('session_id');
-  		table.foreign('session_id').references('id').inTable('sessions');
+  		table.uuid('route_id').references('id').inTable('routes');
+  		table.uuid('session_id').references('id').inTable('sessions');
   	})
   })
 }
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('sessions')
+    return knex.schema.dropTable('session_routes')
 		.then(() => {
-  			return knex.schema.dropTable('users')
+  			return knex.schema.dropTable('sessions')
 	  	})
 	  	.then(() => {
 	  		return knex.schema.dropTable('routes')
@@ -97,7 +89,7 @@ exports.down = function(knex, Promise) {
 		  	return knex.schema.dropTable('finish')
 		})
 	  	.then(() => {
-		  	return knex.schema.dropTable('session_routes')
+		  	return knex.schema.dropTable('users')
 		})
 	  	.then(() => {
 		  	return knex.schema.dropTable('route_type');
