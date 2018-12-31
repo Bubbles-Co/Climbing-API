@@ -37,7 +37,8 @@ exports.up = function(knex, Promise) {
   			.defaultTo(knex.raw('uuid_generate_v4()'));
   		table.uuid('finish_id').references('id').inTable('finish');
   		table.uuid('grade_id').references('id').inTable('grade');
-  		table.uuid('route_type_id').references('id').inTable('route_type');
+		table.uuid('route_type_id').references('id').inTable('route_type');
+		table.unique(['finish_id', 'grade_id', 'route_type_id']);
   	})
   }).then(() => {
   	return knex.schema.createTable('users', function(table) {
