@@ -10,6 +10,8 @@ exports.up = function(knex, Promise) {
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
   		table.string('rating').unique();
+  		table.uuid('route_type_id');
+  		table.foreign('route_type_id').references('id').inTable('route_type');
   	})
   }).then(() => {
   	return knex.schema.createTable('finish', function(table) {
@@ -34,12 +36,12 @@ exports.up = function(knex, Promise) {
   		table.uuid('id')
   			.primary()
   			.defaultTo(knex.raw('uuid_generate_v4()'));
-  		table.uuid('finish');
-  		table.foreign('finish').references('id').inTable('finish');
-  		table.uuid('grade');
-  		table.foreign('grade').references('id').inTable('grade');
-  		table.uuid('route_type');
-  		table.foreign('route_type').references('id').inTable('route_type');
+  		table.uuid('finish_id');
+  		table.foreign('finish_id').references('id').inTable('finish');
+  		table.uuid('grade_id');
+  		table.foreign('grade_id').references('id').inTable('grade');
+  		table.uuid('route_type_id');
+  		table.foreign('route_type_id').references('id').inTable('route_type');
   	})
   }).then(() => {
   	return knex.schema.createTable('users', function(table) {
@@ -61,8 +63,8 @@ exports.up = function(knex, Promise) {
   		table.datetime('date', 6).defaultTo(knex.fn.now(6));
   		table.uuid('user_id');
   		table.foreign('user_id').references('id').inTable('users');
-  		table.uuid('gym');
-  		table.foreign('gym').references('id').inTable('gyms');
+  		table.uuid('gym_id');
+  		table.foreign('gym_id').references('id').inTable('gyms');
   	})
   }).then(() => {
   	return knex.schema.createTable('session_routes', function(table) {
