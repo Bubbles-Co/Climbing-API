@@ -11,12 +11,8 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app })
 
-app.get('/', (req, res) => {
-    res.send('Hello Flash!')
-})
-
-const port = '3000'
+const port = process.env.PORT
 
 app.listen(port, _ => {
-    console.log(`Climbing API is running on port ${port}`)
+    console.log(`Climbing API is running on port ${port}${server.graphqlPath}`)
 })
