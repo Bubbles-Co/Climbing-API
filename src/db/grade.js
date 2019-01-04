@@ -1,18 +1,16 @@
-const { dynamicParamSelector } = require('./util')
+const { fetchFromTable } = require('./util')
 const knexConfig = require('../../knexfile')
 const knex = require('knex')(knexConfig)
 
 const fetchGrades = (parent, args, context, info) => {
-    return knex
-        .select(dynamicParamSelector(info))
-        .from('grade')
-        // .then(console.log)
-        .catch(err => {
-            console.log('Error while fetching grades: ', err)
-            return []
-        })
+    return fetchFromTable('grade', info)
+}
+
+const fetchRoutes = (parent, args, context, info) => {
+    return fetchFromTable('routes', info)
 }
 
 module.exports = {
-    fetchGrades
+    fetchGrades,
+    fetchRoutes
 }
