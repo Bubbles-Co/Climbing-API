@@ -1,21 +1,12 @@
-const knex = require('knex')({
-    client: 'pg',
-    connection: 'postgres://flashadmin:FlashAdmin123@localhost:5432/flash',
-    migrations: {
-        tableName: 'knex_migrations'
-    },
-    seeds: {
-        directory: './seeds/dev'
-    }
-})
+const { dynamicParamSelector } = require('./util')
+const knexConfig = require('../../knexfile')
+const knex = require('knex')(knexConfig)
 
-const fetchGrades = () => {
-    console.log(knex)
+const fetchGrades = (parent, args, context, info) => {
     return knex
-
-        // .select('id')
-        // .from('grade')
-        .then(console.log)
+        .select(dynamicParamSelector(info))
+        .from('grade')
+        // .then(console.log)
         .catch(err => {
             console.log('Error while fetching grades: ', err)
             return []
