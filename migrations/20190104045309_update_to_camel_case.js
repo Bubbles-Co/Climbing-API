@@ -32,7 +32,7 @@ exports.up = async function(knex, Promise) {
 exports.down = async function(knex, Promise) {
   await knex.schema.renameTable('routeTypeGrades', 'route_type_grades');
   await knex.schema.renameTable('sessionRoutes', 'session_routes');
-  await knex.schema.renameTable('routeType', 'route_type');
+  await knex.schema.renameTable('routeTypes', 'route_type');
   await knex.schema.renameTable('grades', 'grade');
 
   await knex.schema.alterTable('route_type_grades', table => {
