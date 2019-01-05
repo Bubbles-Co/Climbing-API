@@ -13,6 +13,7 @@ let ropeGrades = ['5.4', '5.5', '5.6', '5.7', '5.8', '5.9',
 exports.seed = async function (knex, Promise) {
     // First delete everything so we don't get foreign key constraint headache
     await knex('route_type_grades').del()
+    await knex('routes').del()
     await knex('grade').del()
     await knex('route_type').del()
     await knex('finish').del()
