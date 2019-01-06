@@ -28,20 +28,20 @@ const typeDefs = gql`
     }
     type Routes {
         id: String
-        finish_id: String
-        grade_id: String
-        routeType_id: String
+        finishId: String
+        gradeId: String
+        routeTypeId: String
     }
     type SessionRoutes {
         id: String
-        route_id: String
-        session_id: String
+        routeId: String
+        sessionId: String
     }
     type Sessions {
         id: String
         date: String
-        user_id: String
-        gym_id: String
+        userId: String
+        gymId: String
     }
     type Users {
         id: String
