@@ -12,16 +12,16 @@ let ropeGrades = ['5.4', '5.5', '5.6', '5.7', '5.8', '5.9',
 
 exports.seed = async function (knex, Promise) {
     // First delete everything so we don't get foreign key constraint headache
-    await knex('route_type_grades').del()
+    await knex('routeTypeGrades').del()
     await knex('routes').del()
-    await knex('grade').del()
-    await knex('route_type').del()
+    await knex('grades').del()
+    await knex('routeTypes').del()
     await knex('finish').del()
     await knex('gyms').del()
 
     // now seed data
-    // Table: route_type
-    await knex('route_type').insert([
+    // Table: routeTypes
+    await knex('routeTypes').insert([
         { 'type': 'boulder' },
         { 'type': 'top-rope' },
         { 'type': 'sport' },
@@ -30,11 +30,11 @@ exports.seed = async function (knex, Promise) {
         { 'type': 'mixed' }
     ])
 
-    // Table: grade
+    // Table: grades
     const allGrades = [...boulderGrades, ...ropeGrades]
-    for (let grade of allGrades) {
-        await knex('grade').insert([
-            { 'rating': grade }
+    for (let grades of allGrades) {
+        await knex('grades').insert([
+            { 'rating': grades }
         ])
     }
 
@@ -52,33 +52,33 @@ exports.seed = async function (knex, Promise) {
         { 'name': 'Mission Cliffs', 'address': '2295 Harrison St', 'city': 'San Francisco', 'state': 'California', 'zip': '94110' }
     ])
 
-    // Table: route_type_grades
-    const boulder_id = (await knex('route_type').where({ 'type': 'boulder' }).select('id'))[0]['id'];
-    for (let grade of boulderGrades) {
-        const grade_id = (await knex('grade').where({ 'rating': grade }).select('id'))[0]['id'];
-        await knex('route_type_grades').insert([
-            { 'route_type_id': boulder_id, 'grade_id': grade_id }
+    // Table: routeTypeGrades
+    const boulder_id = (await knex('routeTypes').where({ 'type': 'boulder' }).select('id'))[0]['id'];
+    for (let grades of boulderGrades) {
+        const gradeId = (await knex('grades').where({ 'rating': grades }).select('id'))[0]['id'];
+        await knex('routeTypeGrades').insert([
+            { 'routeTypeId': boulder_id, 'gradeId': gradeId }
         ])
     }
 
-    const toprope_id = (await knex('route_type').where({ 'type': 'top-rope' }).select('id'))[0]['id'];
-    const trad_id = (await knex('route_type').where({ 'type': 'trad' }).select('id'))[0]['id'];
-    const sport_id = (await knex('route_type').where({ 'type': 'sport' }).select('id'))[0]['id'];
-    const ice_id = (await knex('route_type').where({ 'type': 'ice' }).select('id'))[0]['id'];
-    const mixed_id = (await knex('route_type').where({ 'type': 'mixed' }).select('id'))[0]['id'];
-    for (let grade of ropeGrades) {
-        const grade_id = (await knex('grade').where({ 'rating': grade }).select('id'))[0]['id'];
-        await knex('route_type_grades').insert([
-            { 'route_type_id': toprope_id, 'grade_id': grade_id },
-            { 'route_type_id': trad_id, 'grade_id': grade_id },
-            { 'route_type_id': sport_id, 'grade_id': grade_id },
-            { 'route_type_id': ice_id, 'grade_id': grade_id },
-            { 'route_type_id': mixed_id, 'grade_id': grade_id }
+    const toprope_id = (await knex('routeTypes').where({ 'type': 'top-rope' }).select('id'))[0]['id'];
+    const trad_id = (await knex('routeTypes').where({ 'type': 'trad' }).select('id'))[0]['id'];
+    const sport_id = (await knex('routeTypes').where({ 'type': 'sport' }).select('id'))[0]['id'];
+    const ice_id = (await knex('routeTypes').where({ 'type': 'ice' }).select('id'))[0]['id'];
+    const mixed_id = (await knex('routeTypes').where({ 'type': 'mixed' }).select('id'))[0]['id'];
+    for (let grades of ropeGrades) {
+        const gradeId = (await knex('grades').where({ 'rating': grades }).select('id'))[0]['id'];
+        await knex('routeTypeGrades').insert([
+            { 'routeTypeId': toprope_id, 'gradeId': gradeId },
+            { 'routeTypeId': trad_id, 'gradeId': gradeId },
+            { 'routeTypeId': sport_id, 'gradeId': gradeId },
+            { 'routeTypeId': ice_id, 'gradeId': gradeId },
+            { 'routeTypeId': mixed_id, 'gradeId': gradeId }
         ])
     }
 
     // Table: Routes
-    const grade_id = (await knex('grade').where({ 'rating': 'V0' }).select('id'))[0]['id']
-    const finish_id = (await knex('finish').where({ 'type': 'onsight' }).select('id'))[0]['id']
-    await knex('routes').insert([{ 'route_type_id': toprope_id, 'grade_id': grade_id, 'finish_id': finish_id }])
+    const gradeId = (await knex('grades').where({ 'rating': 'V0' }).select('id'))[0]['id']
+    const finishId = (await knex('finish').where({ 'type': 'onsight' }).select('id'))[0]['id']
+    await knex('routes').insert([{ 'routeTypeId': toprope_id, 'gradeId': gradeId, 'finishId': finishId }])
 };
