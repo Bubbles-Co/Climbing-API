@@ -6,7 +6,10 @@ const fetchGrades = (parent, args, context, info) => {
     return fetchFromTable('grade', info)
 }
 
-const fetchRoutes = (parent, args, context, info) => {
+const fetchRoutes = (obj, args, context, info) => {
+    console.log("parent: ", obj);
+    console.log("args: ", args);
+    console.log("context: ", context);
     return fetchFromTable('routes', info)
 }
 

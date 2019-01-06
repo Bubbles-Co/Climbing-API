@@ -5,6 +5,7 @@ const typeDefs = gql`
     directive @join(
         table: String
     ) on FIELD_DEFINITION
+
     type Grade {
         id: String
         rating: String
@@ -30,10 +31,10 @@ const typeDefs = gql`
         type: String
     }
     type Routes {
-        id: String
-        finish: [Finish] @join(table: finish)
-        grade: [Grade] @join(table: grade)
-        routeType: [RouteType] @join(table: route_type)
+        id: String @ join(table: "finish")
+        finish: [Finish] @join(table: "finish")
+        grade: [Grade] @join(table: "grade")
+        routeType: [RouteType] @join(table: "route_type")
     }
     type SessionRoutes {
         id: String
@@ -58,7 +59,7 @@ const typeDefs = gql`
     type Query {
         helloFlash: String
         grades: [Grade]
-        routes: [Routes]
+        routes: [Routes] @join(table: "finish")
     }
 `
 
