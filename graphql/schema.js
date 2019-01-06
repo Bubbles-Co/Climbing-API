@@ -1,11 +1,7 @@
 const { gql } = require('apollo-server-express')
-const { fetchGrades, fetchRoutes } = require('../src/db/grade')
+const { fetch } = require('../src/db/util.js')
 
 const typeDefs = gql`
-    directive @join(
-        table: String
-    ) on FIELD_DEFINITION
-
     type Grade {
         id: String
         rating: String
@@ -31,10 +27,10 @@ const typeDefs = gql`
         type: String
     }
     type Routes {
-        id: String @ join(table: "finish")
-        finish: [Finish] @join(table: "finish")
-        grade: [Grade] @join(table: "grade")
-        routeType: [RouteType] @join(table: "route_type")
+        id: String
+        finish_id: String
+        grade_id: String
+        routeType_id: String
     }
     type SessionRoutes {
         id: String
@@ -47,27 +43,31 @@ const typeDefs = gql`
         user_id: String
         gym_id: String
     }
-    type users {
+    type Users {
         id: String
         name: String
         email: String
         address: String
-        city : String
+        city: String
         state: String
         zip: String
     }
     type Query {
-        helloFlash: String
         grades: [Grade]
-        routes: [Routes] @join(table: "finish")
+        routes: [Routes]
+        sessions: [Sessions]
+        users: [Users]
+        finish: [Finish]
     }
 `
 
 const resolvers = {
     Query: {
-        helloFlash: () => 'hello flash!',
-        grades: fetchGrades,
-        routes: fetchRoutes
+        grades: fetch,
+        routes: fetch,
+        sessions: fetch,
+        users: fetch,
+        finish: fetch
     }
 }
 

@@ -6,23 +6,9 @@ const { defaultFieldResolver } = require('graphql');
 
 const app = express()
 
-class JoinDirective extends SchemaDirectiveVisitor {
-    visitFieldDefinition(field) {
-        const { resolve = defaultFieldResolver } = field
-        field.resolve = async function (...args) {
-            const result = await resolve.apply(this, args)
-            return result;
-        }
-    }
-}
-
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    schemaDirectives: {
-        join: JoinDirective
-    }
 })
 
 server.applyMiddleware({ app })
