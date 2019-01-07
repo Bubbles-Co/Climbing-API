@@ -1,9 +1,16 @@
 const { gql } = require('apollo-server-express')
 const { fetch } = require('../src/db/util.js')
+const { joinMonsterAdapt } = require('join-monster-graphql-tools-adapter')
+const { joinMonster } = require('join-monster').default
+const { db } = require('sqlite3')
+
 
 const typeDefs = gql`
+    directive @upper (
+        flag: String
+    ) on FIELD_DEFINITION
     type Grade {
-        id: String
+        id: String @upper(flag: "singupingu")
         rating: String
     }
     type Finish {

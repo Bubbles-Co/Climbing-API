@@ -18,6 +18,7 @@ const fetchFromTable = (tableName, info) => {
 
 const fetch = (parent, args, context, info) => {
     const { fieldName } = info
+    console.log("selections: ", info.fieldNodes[0].selectionSet.selections);
     return fetchFromTable(fieldName, info)
 }
 
